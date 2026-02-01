@@ -1,122 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>For Babe ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Babe ❤️</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: "Comic Sans MS", "Poppins", sans-serif;
-        }
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: "Comic Sans MS", "Poppins", sans-serif;
+    }
 
-        body {
-            margin: 0;
-            height: 100vh;
-            background: linear-gradient(135deg, #ffd6e8, #ffeef5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ffd6e8, #ffeef5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
 
-        .card {
-            background: #fff;
-            padding: 40px 50px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 2;
-        }
+    .card {
+        background: #fff;
+        padding: 40px 50px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        z-index: 2;
+    }
 
-        .card h1 {
-            margin: 0 0 25px;
-            font-size: 26px;
-            color: #333;
-        }
+    h1 {
+        margin-bottom: 25px;
+        font-size: 26px;
+    }
 
-        .buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
+    .yes-button {
+        padding: 14px 30px;
+        border-radius: 999px;
+        border: none;
+        background: #ff4d7e;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
 
-        .yes-button {
-            padding: 12px 26px;
-            border-radius: 999px;
-            border: none;
-            background: #ff4d7e;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
+    .yes-button:hover {
+        transform: scale(1.1);
+    }
 
-        .yes-button:hover {
-            transform: scale(1.1);
-        }
+    .no-button {
+        position: fixed;
+        padding: 12px 26px;
+        border-radius: 999px;
+        border: none;
+        background: #eee;
+        font-size: 16px;
 
-        .no-button {
-            position: absolute;
-            padding: 10px 22px;
-            border-radius: 999px;
-            border: none;
-            background: #eee;
-            font-size: 16px;
-            cursor: default;
-            user-select: none;
-            top: 20%;
-            left: 20%;
-        }
-    </style>
+        /* 🚨 THE MAGIC LINE */
+        pointer-events: none;
+
+        user-select: none;
+    }
+</style>
 </head>
 
 <body>
 
-    <button class="no-button">No</button>
+<button class="no-button">No</button>
 
-    <div class="card">
-        <h1>Babe, will you be my Valentine? 🥺❤️</h1>
-        <div class="buttons">
-            <button class="yes-button" onclick="goYes()">YES 💕</button>
-        </div>
-    </div>
+<div class="card">
+    <h1>Babe, will you be my Valentine? 🥺❤️</h1>
+    <button class="yes-button" onclick="goYes()">YES 💕</button>
+</div>
 
-    <script>
-        const noBtn = document.querySelector(".no-button");
+<script>
+    const noBtn = document.querySelector(".no-button");
 
-        document.addEventListener("mousemove", (e) => {
-            const rect = noBtn.getBoundingClientRect();
+    // Initial random position
+    moveNoButton();
 
-            const btnX = rect.left + rect.width / 2;
-            const btnY = rect.top + rect.height / 2;
+    document.addEventListener("mousemove", (e) => {
+        const rect = noBtn.getBoundingClientRect();
 
-            const dx = e.clientX - btnX;
-            const dy = e.clientY - btnY;
+        const dx = e.clientX - (rect.left + rect.width / 2);
+        const dy = e.clientY - (rect.top + rect.height / 2);
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            // Cursor NEVER reaches the button
-            if (distance < 140) {
-                const padding = 50;
-
-                const maxX = window.innerWidth - rect.width - padding;
-                const maxY = window.innerHeight - rect.height - padding;
-
-                const newX = Math.random() * maxX;
-                const newY = Math.random() * maxY;
-
-                noBtn.style.left = `${newX}px`;
-                noBtn.style.top = `${newY}px`;
-            }
-        });
-
-        function goYes() {
-            window.location.href = "yes.html";
+        // Escape BEFORE cursor gets close
+        if (distance < 180) {
+            moveNoButton();
         }
-    </script>
+    });
+
+    function moveNoButton() {
+        const padding = 40;
+
+        const x = Math.random() * (window.innerWidth - 120 - padding);
+        const y = Math.random() * (window.innerHeight - 60 - padding);
+
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+    }
+
+    function goYes() {
+        window.location.href = "yes.html";
+    }
+</script>
 
 </body>
 </html>
