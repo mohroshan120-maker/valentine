@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Love You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #ffe6f2, #fff0f7);
+    font-family: "Comic Sans MS", cursive;
+    text-align: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+#message {
+    font-size: 28px;
+    color: #ff4d79;
+    margin-top: 40px;
+    min-height: 80px;
+}
+
+.cat {
+    width: 180px;
+    margin: 10px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.floating {
+    position: fixed;
+    top: -50px;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-50px); opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0; }
+}
+
+@media(max-width:600px){
+    #message{
+        font-size:22px;
+    }
+    .cat{
+        width:140px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>YAY BABE ❤️🥰</h1>
+
+<div id="message"></div>
+
+<div>
+<img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+<img class="cat" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
+<img class="cat" src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif">
+</div>
+
+<audio autoplay loop>
+<source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const text = "You just made me the happiest person in the world. I love you so much ❤️🐱";
+let index = 0;
+
+function typeWriter(){
+    if(index < text.length){
+        document.getElementById("message").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 60);
+    }
+}
+typeWriter();
+
+setInterval(createFloating, 300);
+
+function createFloating(){
+    const item = document.createElement("div");
+    item.classList.add("floating");
+
+    const symbols = ["💖","🌸","🌹","💘","💕"];
+    item.innerHTML = symbols[Math.floor(Math.random()*symbols.length)];
+
+    item.style.left = Math.random()*100 + "vw";
+    item.style.fontSize = Math.random()*25 + 20 + "px";
+    item.style.animationDuration = Math.random()*3 + 3 + "s";
+
+    document.body.appendChild(item);
+
+    setTimeout(()=>{
+        item.remove();
+    },6000);
+}
+</script>
+
+</body>
+</html>
