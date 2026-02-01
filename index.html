@@ -91,16 +91,14 @@ setInterval(() => {
         const maxX = area.clientWidth - noBtn.offsetWidth;
         const maxY = area.clientHeight - noBtn.offsetHeight;
 
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
     }
-}, 100); // runs forever 💀
-  
+}, 100);
+
+/* ✅ Redirect instead of alert */
 function yesClicked() {
-    alert("YAY 💖 I knew it!");
+    window.location.href = "yes.html";
 }
 </script>
 
