@@ -66,6 +66,22 @@ header span {
     from { transform: translateY(-10px); opacity: 1; }
     to { transform: translateY(110vh); opacity: 0; }
 }
+
+/* Click overlay */
+#tapToPlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 214, 231, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ff4d79;
+    cursor: pointer;
+    z-index: 999;
+    transition: opacity 0.6s ease;
+}
 </style>
 </head>
 
@@ -82,8 +98,9 @@ header span {
       alt="Cute bears kissing">
 </div>
 
-<!-- Background Music -->
-<audio id="bgMusic" loop muted>
+<div id="tapToPlay">Tap anywhere 💖</div>
+
+<audio id="bgMusic" loop>
     <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_2c7c4f4c3b.mp3" type="audio/mpeg">
 </audio>
 
@@ -100,16 +117,14 @@ setInterval(() => {
     setTimeout(() => heart.remove(), 7000);
 }, 600);
 
-/* Music autoplay FIX (muted → unmute) */
+/* Music play on first tap */
+const overlay = document.getElementById("tapToPlay");
 const music = document.getElementById("bgMusic");
 
-window.addEventListener("load", () => {
-    music.play().then(() => {
-        setTimeout(() => {
-            music.muted = false;
-            music.volume = 0.6;
-        }, 500);
-    });
+overlay.addEventListener("click", () => {
+    music.play();
+    overlay.style.opacity = "0";
+    setTimeout(() => overlay.remove(), 600);
 });
 </script>
 
