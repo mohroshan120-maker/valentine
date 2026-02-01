@@ -19,7 +19,7 @@ body {
 
 /* Header */
 header {
-    margin: 40px 0 20px;
+    margin: 40px 0 10px;
     font-size: 44px;
     font-weight: 700;
     color: #ff4d79;
@@ -29,15 +29,28 @@ header span {
     color: #ff85a2;
 }
 
+/* Music button */
+#musicBtn {
+    background: #ff4d79;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(255,77,121,0.4);
+}
+
 /* Card */
 .card {
     background: white;
     width: 90%;
     max-width: 600px;
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 30px 20px 40px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
 
 /* Message */
@@ -75,22 +88,23 @@ header span {
     Be My <span>Valentine</span>
 </header>
 
+<button id="musicBtn">🎵 Play Music</button>
+
 <div class="card">
     <h2>Knew you would say yes! 💕</h2>
 
     <img class="bear"
-     src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
-     alt="Cute bears kissing">
+        src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+        alt="Cute bears kissing">
 </div>
 
-<!-- 🎵 Background Music -->
+<!-- Background Music -->
 <audio id="bgMusic" loop>
-    <!-- Replace this with your own mp3 if you want -->
     <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_2c7c4f4c3b.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* Floating hearts */
+/* Floating hearts forever */
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -102,11 +116,14 @@ setInterval(() => {
     setTimeout(() => heart.remove(), 7000);
 }, 600);
 
-/* 🎵 Music autoplay after first interaction (browser safe) */
+/* Music play (browser safe) */
 const music = document.getElementById("bgMusic");
-document.addEventListener("click", () => {
+const btn = document.getElementById("musicBtn");
+
+btn.addEventListener("click", () => {
     music.play();
-}, { once: true });
+    btn.style.display = "none";
+});
 </script>
 
 </body>
