@@ -39,6 +39,7 @@ button {
     border: none;
     border-radius: 30px;
     font-size: 18px;
+    transition: transform 0.25s ease;
 }
 
 #yesBtn {
@@ -56,9 +57,8 @@ button {
     position: absolute;
     top: 60px;
     left: 160px;
-
-    /* 🔒 THIS IS THE KEY */
-    pointer-events: none;
+    pointer-events: none; /* never clickable */
+    transition: left 0.35s ease, top 0.35s ease;
 }
 </style>
 </head>
@@ -78,21 +78,34 @@ button {
 const noBtn = document.getElementById("noBtn");
 const area = document.getElementById("area");
 
-// Move No randomly every time mouse moves
-document.addEventListener("mousemove", () => {
-    const areaRect = area.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
+let lastMove = 0;
 
-    const x = Math.random() * (areaRect.width - btnRect.width);
-    const y = Math.random() * (areaRect.height - btnRect.height);
+document.addEventListener("mousemove", (e) => {
+    const now = Date.now();
+    if (now - lastMove < 400) return; // slow it down
+    lastMove = now;
 
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    const rect = noBtn.getBoundingClientRect();
+    const dist = Math.hypot(
+        e.clientX - (rect.left + rect.width / 2),
+        e.clientY - (rect.top + rect.height / 2)
+    );
+
+    if (dist < 120) {
+        const areaRect = area.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
+
+        const x = Math.random() * (areaRect.width - btnRect.width);
+        const y = Math.random() * (areaRect.height - btnRect.height);
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
 });
 
-// Mobile support
+// Mobile gentle move
 document.addEventListener("touchstart", () => {
-    const x = Math.random() * 250;
+    const x = Math.random() * 240;
     const y = Math.random() * 80;
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
