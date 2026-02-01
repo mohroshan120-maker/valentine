@@ -11,17 +11,17 @@ body {
     height: 100vh;
     background: linear-gradient(135deg, #ffd6e7, #ffe9f3);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     font-family: 'Comic Sans MS', cursive;
 }
 
 .card {
     background: white;
     padding: 40px 30px;
-    border-radius: 18px;
-    text-align: center;
+    border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    text-align: center;
     width: 320px;
 }
 
@@ -32,11 +32,11 @@ h1 {
 
 .buttons {
     position: relative;
-    height: 80px;
+    height: 120px;
 }
 
 button {
-    padding: 12px 26px;
+    padding: 12px 28px;
     font-size: 16px;
     border: none;
     border-radius: 30px;
@@ -46,16 +46,14 @@ button {
 #yes {
     background: #ff4d79;
     color: white;
+    z-index: 1;
 }
 
 #no {
     background: #e0e0e0;
     position: absolute;
     left: 20px;
-    top: 20px;
-
-    /* 🔒 KEY FIX */
-    pointer-events: none;
+    top: 60px;
 }
 </style>
 </head>
@@ -65,7 +63,7 @@ button {
 <div class="card">
     <h1>Babe, will you be my Valentine? 🥺❤️</h1>
 
-    <div class="buttons">
+    <div class="buttons" id="area">
         <button id="yes" onclick="yesClicked()">YES 💞</button>
         <button id="no">No</button>
     </div>
@@ -73,29 +71,36 @@ button {
 
 <script>
 const noBtn = document.getElementById("no");
-const container = document.querySelector(".buttons");
+const area = document.getElementById("area");
 
-container.addEventListener("mousemove", () => {
-    // Enable interaction only when moving
-    noBtn.style.pointerEvents = "auto";
+let mouseX = 0;
+let mouseY = 0;
 
-    const maxX = container.clientWidth - noBtn.offsetWidth;
-    const maxY = container.clientHeight - noBtn.offsetHeight;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-
-    // Disable again immediately 😈
-    setTimeout(() => {
-        noBtn.style.pointerEvents = "none";
-    }, 50);
+document.addEventListener("mousemove", e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 });
 
+setInterval(() => {
+    const rect = noBtn.getBoundingClientRect();
+    const distX = mouseX - (rect.left + rect.width / 2);
+    const distY = mouseY - (rect.top + rect.height / 2);
+    const distance = Math.sqrt(distX * distX + distY * distY);
+
+    if (distance < 120) {
+        const maxX = area.clientWidth - noBtn.offsetWidth;
+        const maxY = area.clientHeight - noBtn.offsetHeight;
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+}, 100); // runs forever 💀
+  
 function yesClicked() {
-    window.location.href = "yes.html";
+    alert("YAY 💖 I knew it!");
 }
 </script>
 
