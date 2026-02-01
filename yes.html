@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I Love You ❤️</title>
+<title>Knew You’d Say Yes ❤️</title>
 
 <style>
 body {
@@ -15,27 +15,32 @@ body {
     padding: 20px;
 }
 
-/* Message */
-#message {
-    font-size: 28px;
+h1 {
+    font-size: 42px;
+    margin-top: 30px;
     color: #ff4d79;
-    margin-top: 40px;
-    min-height: 80px;
 }
 
-/* Cats */
-.cat {
-    width: 180px;
-    margin: 10px;
-    animation: bounce 2.8s infinite;
+#message {
+    font-size: 26px;
+    color: #ff6f91;
+    margin: 25px 0;
+    min-height: 70px;
 }
 
-@keyframes bounce {
+/* Bear gif */
+.bear {
+    width: 260px;
+    margin-top: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
     0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+    50% { transform: translateY(-12px); }
 }
 
-/* Floating hearts & flowers */
+/* Floating hearts */
 .floating {
     position: fixed;
     top: -50px;
@@ -48,14 +53,10 @@ body {
     100% { transform: translateY(110vh); opacity: 0; }
 }
 
-/* Mobile */
 @media(max-width:600px){
-    #message{
-        font-size:22px;
-    }
-    .cat{
-        width:140px;
-    }
+    h1 { font-size: 32px; }
+    #message { font-size: 22px; }
+    .bear { width: 200px; }
 }
 </style>
 </head>
@@ -66,21 +67,17 @@ body {
 
 <div id="message"></div>
 
-<!-- Shocked / OMG Cats -->
-<div>
-    <img class="cat" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
-    <img class="cat" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-    <img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
-</div>
+<!-- Bear Hug GIF -->
+<img class="bear" src="https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif">
 
-<!-- Background Music -->
-<audio autoplay loop>
+<!-- Music -->
+<audio id="bgMusic" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* ❤️ Typewriter Message */
-const text = "You just made me the happiest person in the world. I love you so much ❤️🐱";
+/* Typewriter text */
+const text = "Knew you would say yes! You just made me the happiest person in the world ❤️";
 let index = 0;
 
 function typeWriter(){
@@ -92,25 +89,29 @@ function typeWriter(){
 }
 typeWriter();
 
-/* 💖 Floating hearts & flowers */
-setInterval(createFloating, 300);
+/* Floating hearts */
+setInterval(createFloating, 350);
 
 function createFloating(){
     const item = document.createElement("div");
     item.classList.add("floating");
 
-    const symbols = ["💖","🌸","🌹","💘","💕"];
+    const symbols = ["💖","💕","💘","🌸"];
     item.innerHTML = symbols[Math.floor(Math.random()*symbols.length)];
 
     item.style.left = Math.random()*100 + "vw";
-    item.style.fontSize = Math.random()*25 + 20 + "px";
+    item.style.fontSize = Math.random()*24 + 18 + "px";
     item.style.animationDuration = Math.random()*3 + 3 + "s";
 
     document.body.appendChild(item);
 
-    setTimeout(()=>{
-        item.remove();
-    },6000);
+    setTimeout(()=> item.remove(), 6000);
+}
+
+/* Play music after YES click */
+const music = document.getElementById("bgMusic");
+if(sessionStorage.getItem("playMusic") === "yes"){
+    music.play().catch(()=>{});
 }
 </script>
 
