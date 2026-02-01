@@ -8,23 +8,30 @@
 body {
     background: linear-gradient(135deg, #ffd6e7, #ffe9f3);
     font-family: "Comic Sans MS", cursive;
-    text-align: center;
-    padding-top: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     overflow: hidden;
 }
 
 .box {
     background: white;
     width: 420px;
-    margin: auto;
     padding: 40px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    position: relative;
+    text-align: center;
 }
 
 h2 {
     font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    position: relative;
+    height: 80px;
 }
 
 button {
@@ -33,13 +40,14 @@ button {
     border-radius: 30px;
     font-size: 18px;
     cursor: pointer;
-    margin: 15px;
     transition: 0.2s;
 }
 
 #yesBtn {
     background: #ff4d79;
     color: white;
+    position: relative;
+    z-index: 2;
 }
 
 #yesBtn:hover {
@@ -49,66 +57,63 @@ button {
 #noBtn {
     background: #eee;
     position: absolute;
-    left: 160px;
-    top: 170px;
+    left: 0;
+    top: 0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box" id="box">
+<div class="box">
     <h2>Babe, will you be my Valentine? 🥺❤️</h2>
 
-    <button id="yesBtn" onclick="sayYes()">YES 💕</button>
-    <button id="noBtn">No</button>
+    <div class="buttons" id="buttons">
+        <button id="yesBtn" onclick="sayYes()">YES 💕</button>
+        <button id="noBtn">No</button>
+    </div>
 </div>
 
 <script>
 const noBtn = document.getElementById("noBtn");
-const box = document.getElementById("box");
+const buttons = document.getElementById("buttons");
 
-let escapeMode = false;
+let escape = false;
 
-// Activate escape mode after 30 seconds
+// Enable escape after 3 seconds (change to 30000 if you want 30s)
 setTimeout(() => {
-    escapeMode = true;
-    noBtn.style.pointerEvents = "none"; // CAN'T CLICK ANYMORE
-}, 30000);
+    escape = true;
+    noBtn.style.pointerEvents = "none"; // cannot be clicked EVER
+}, 3000);
 
-function teleportNo() {
-    if (!escapeMode) return;
+function moveNo() {
+    if (!escape) return;
 
-    const boxRect = box.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
+    const area = buttons.getBoundingClientRect();
+    const btn = noBtn.getBoundingClientRect();
 
-    const maxX = boxRect.width - btnRect.width;
-    const maxY = boxRect.height - btnRect.height;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+    const x = Math.random() * (area.width - btn.width);
+    const y = Math.random() * (area.height - btn.height);
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 }
 
-// Detect mouse getting close (NOT just hover)
+// Detect approach, not hover
 document.addEventListener("mousemove", (e) => {
-    if (!escapeMode) return;
+    if (!escape) return;
 
-    const btnRect = noBtn.getBoundingClientRect();
-    const distance = Math.hypot(
-        e.clientX - (btnRect.left + btnRect.width / 2),
-        e.clientY - (btnRect.top + btnRect.height / 2)
+    const rect = noBtn.getBoundingClientRect();
+    const dist = Math.hypot(
+        e.clientX - (rect.left + rect.width / 2),
+        e.clientY - (rect.top + rect.height / 2)
     );
 
-    if (distance < 120) {
-        teleportNo();
-    }
+    if (dist < 100) moveNo();
 });
 
-// Mobile touch protection
-document.addEventListener("touchstart", teleportNo);
+// Mobile
+document.addEventListener("touchstart", moveNo);
 
 function sayYes() {
     window.location.href = "yes.html";
