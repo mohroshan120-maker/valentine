@@ -9,11 +9,12 @@
 body {
     margin: 0;
     min-height: 100vh;
-    background: #0f1c24;
+    background: linear-gradient(135deg, #ffd6e7, #ffe9f3);
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Header */
@@ -21,11 +22,11 @@ header {
     margin: 40px 0 20px;
     font-size: 44px;
     font-weight: 700;
-    color: white;
+    color: #ff4d79;
 }
 
 header span {
-    color: #8cff6a;
+    color: #ff85a2;
 }
 
 /* Card */
@@ -33,9 +34,10 @@ header span {
     background: white;
     width: 90%;
     max-width: 600px;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 30px 20px 40px;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 /* Message */
@@ -49,6 +51,7 @@ header span {
 .bear {
     width: 280px;
     max-width: 90%;
+    border-radius: 12px;
 }
 
 /* Floating hearts */
@@ -73,16 +76,21 @@ header span {
 </header>
 
 <div class="card">
-    <h2>Knew you would say yes!</h2>
+    <h2>Knew you would say yes! 💕</h2>
 
-    <!-- TWO CUTE BEARS KISSING -->
     <img class="bear"
      src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
      alt="Cute bears kissing">
 </div>
 
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" loop>
+    <!-- Replace this with your own mp3 if you want -->
+    <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_2c7c4f4c3b.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-/* Soft floating hearts */
+/* Floating hearts */
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -93,6 +101,12 @@ setInterval(() => {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 7000);
 }, 600);
+
+/* 🎵 Music autoplay after first interaction (browser safe) */
+const music = document.getElementById("bgMusic");
+document.addEventListener("click", () => {
+    music.play();
+}, { once: true });
 </script>
 
 </body>
