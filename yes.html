@@ -15,6 +15,7 @@ body {
     padding: 20px;
 }
 
+/* Message */
 #message {
     font-size: 28px;
     color: #ff4d79;
@@ -22,10 +23,11 @@ body {
     min-height: 80px;
 }
 
+/* Cats */
 .cat {
     width: 180px;
     margin: 10px;
-    animation: bounce 2s infinite;
+    animation: bounce 2.8s infinite;
 }
 
 @keyframes bounce {
@@ -33,6 +35,7 @@ body {
     50% { transform: translateY(-15px); }
 }
 
+/* Floating hearts & flowers */
 .floating {
     position: fixed;
     top: -50px;
@@ -45,6 +48,7 @@ body {
     100% { transform: translateY(110vh); opacity: 0; }
 }
 
+/* Mobile */
 @media(max-width:600px){
     #message{
         font-size:22px;
@@ -62,17 +66,20 @@ body {
 
 <div id="message"></div>
 
+<!-- Shocked / OMG Cats -->
 <div>
-<img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
-<img class="cat" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
-<img class="cat" src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif">
+    <img class="cat" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+    <img class="cat" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+    <img class="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
 </div>
 
+<!-- Background Music -->
 <audio autoplay loop>
-<source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+/* ❤️ Typewriter Message */
 const text = "You just made me the happiest person in the world. I love you so much ❤️🐱";
 let index = 0;
 
@@ -85,6 +92,7 @@ function typeWriter(){
 }
 typeWriter();
 
+/* 💖 Floating hearts & flowers */
 setInterval(createFloating, 300);
 
 function createFloating(){
