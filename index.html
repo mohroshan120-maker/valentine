@@ -3,115 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <title>For Babe ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
     margin: 0;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #ffd6e7, #ffe9f3);
-    font-family: "Comic Sans MS", cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Comic Sans MS', cursive;
 }
 
-.box {
+.card {
     background: white;
-    width: 420px;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 40px 30px;
+    border-radius: 18px;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    width: 320px;
 }
 
-h2 {
-    font-size: 28px;
-    margin-bottom: 40px;
+h1 {
+    font-size: 22px;
+    margin-bottom: 30px;
 }
 
-.area {
+.buttons {
     position: relative;
-    height: 120px;
+    height: 80px;
 }
 
 button {
-    padding: 14px 35px;
+    padding: 12px 26px;
+    font-size: 16px;
     border: none;
     border-radius: 30px;
-    font-size: 18px;
-    transition: transform 0.25s ease;
-}
-
-#yesBtn {
-    background: #ff4d79;
-    color: white;
     cursor: pointer;
 }
 
-#yesBtn:hover {
-    transform: scale(1.1);
+#yes {
+    background: #ff4d79;
+    color: white;
 }
 
-#noBtn {
-    background: #eee;
+#no {
+    background: #e0e0e0;
     position: absolute;
-    top: 60px;
-    left: 160px;
-    pointer-events: none; /* never clickable */
-    transition: left 0.35s ease, top 0.35s ease;
+    left: 20px;
+    top: 20px;
+
+    /* 🔒 KEY FIX */
+    pointer-events: none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2>Babe, will you be my Valentine? 🥺❤️</h2>
+<div class="card">
+    <h1>Babe, will you be my Valentine? 🥺❤️</h1>
 
-    <div class="area" id="area">
-        <button id="yesBtn" onclick="sayYes()">YES 💕</button>
-        <button id="noBtn">No</button>
+    <div class="buttons">
+        <button id="yes" onclick="yesClicked()">YES 💞</button>
+        <button id="no">No</button>
     </div>
 </div>
 
 <script>
-const noBtn = document.getElementById("noBtn");
-const area = document.getElementById("area");
+const noBtn = document.getElementById("no");
+const container = document.querySelector(".buttons");
 
-let lastMove = 0;
+container.addEventListener("mousemove", () => {
+    // Enable interaction only when moving
+    noBtn.style.pointerEvents = "auto";
 
-document.addEventListener("mousemove", (e) => {
-    const now = Date.now();
-    if (now - lastMove < 400) return; // slow it down
-    lastMove = now;
+    const maxX = container.clientWidth - noBtn.offsetWidth;
+    const maxY = container.clientHeight - noBtn.offsetHeight;
 
-    const rect = noBtn.getBoundingClientRect();
-    const dist = Math.hypot(
-        e.clientX - (rect.left + rect.width / 2),
-        e.clientY - (rect.top + rect.height / 2)
-    );
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
-    if (dist < 120) {
-        const areaRect = area.getBoundingClientRect();
-        const btnRect = noBtn.getBoundingClientRect();
-
-        const x = Math.random() * (areaRect.width - btnRect.width);
-        const y = Math.random() * (areaRect.height - btnRect.height);
-
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    }
-});
-
-// Mobile gentle move
-document.addEventListener("touchstart", () => {
-    const x = Math.random() * 240;
-    const y = Math.random() * 80;
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+
+    // Disable again immediately 😈
+    setTimeout(() => {
+        noBtn.style.pointerEvents = "none";
+    }, 50);
 });
 
-function sayYes() {
+function yesClicked() {
     window.location.href = "yes.html";
 }
 </script>
